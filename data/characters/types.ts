@@ -8,11 +8,11 @@ export type Character = {
   eyeColor: string;
   birthYear: string;
   gender: string;
-  homeWorld?: Planet;
+  // homeWorld?: Planet;
   homeWorldUrl: string;
-  films?: Film[];
+  // films?: Film[];
   filmsUrls: string[];
-  starships?: Starship[];
+  // starships?: Starship[];
   starshipsUrls: string[];
 }
 

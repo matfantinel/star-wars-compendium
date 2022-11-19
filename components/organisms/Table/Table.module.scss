@@ -1,7 +1,32 @@
 .container {
-  
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  margin: 40px;
+  padding: 10px 20px;
+
+  background-color: var(--card-background-color);
+  border-radius: 16px;
+  animation: pulsing-glow 1.5s cubic-bezier(0.22, 0.61, 0.36, 1) infinite alternate;
 }
 
 .table {
-  
+  border-collapse: collapse;
+  overflow: hidden;
+
+  tr {
+    &:nth-child(even) {
+      background-color: rgba(var(--foreground-color-rgb), 0.1);
+    }
+  }
+}
+
+@keyframes pulsing-glow {
+  0% {
+    box-shadow: -1px 0px 19px 0px rgba(var(--primary-color-rgb),0.75);
+  }
+  100% {
+    box-shadow: -1px 0px 19px -3px rgba(var(--primary-color-rgb),0.75);
+  }
 }

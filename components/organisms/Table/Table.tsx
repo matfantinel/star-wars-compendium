@@ -1,4 +1,5 @@
 import React from 'react';
+import CellContent from '../../molecules/CellContent';
 import styles from './Table.module.scss';
 
 export enum ColumnType {
@@ -26,24 +27,32 @@ const Table = <T,>({ columns, data, loading, error }: Props<T>) => {
         <thead>
           <tr>
             {columns.map((column) => (
-              <th key={column.key as string}>{column.title}</th>
+              <CellContent isHeader data={column.title} key={column.key as string} />
             ))}
           </tr>
         </thead>
         <tbody>
-          {!loading &&
-            data?.map((item, index) => (
-              <tr key={index}>
-                {columns.map((column) => (
-                  <td key={column.key as string}>
-                    {column.type === ColumnType.Text ? (item[column.key] as string) : 'TO-DO'}
-                  </td>
-                ))}
-              </tr>
-            ))}
+          {loading
+            ? Array.from({ length: 4 }).map((_, i) => (
+                <tr key={`placeholder-${i}`}>
+                  {columns.map((_, j) => (
+                    <CellContent loading key={`placeholder-${i}-${j}`} />
+                  ))}
+                </tr>
+              ))
+            : data?.map((item, index) => (
+                <tr key={(item as any)?.uid ?? index}>
+                  {columns.map((column) =>
+                    column.type === ColumnType.Text ? (
+                      <CellContent data={item[column.key] as string} key={column.key as string} />
+                    ) : (
+                      <CellContent loading data='TO-DO' key={column.key as string} />
+                    )
+                  )}
+                </tr>
+              ))}
         </tbody>
       </table>
-      {loading && <span>Loading...</span>}
       {error && <span>{error}</span>}
     </div>
   );

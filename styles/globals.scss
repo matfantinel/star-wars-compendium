@@ -1,2 +1,10 @@
-@import 'reset';
+@import '_reset';
+@import '_variables';
 
+body {
+  color: var(--foreground-color);
+  background-color: var(--background-color);
+  background-image: radial-gradient(#636363 0.4px, transparent 0.4px), radial-gradient(#656565 0.4px, #000000 0.4px);
+  background-size: 25px 25px;
+  background-position: 1px 0, 13px 8px;
+}

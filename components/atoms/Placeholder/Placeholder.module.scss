@@ -1,0 +1,14 @@
+.placeholder {
+  display: inline-block;
+  border-radius: 4px;
+  animation: placeholder-loading 1s linear infinite alternate;
+}
+
+@keyframes placeholder-loading {
+  0% {
+    background-color: rgba(var(--foreground-color-rgb), 0.1);
+  }
+  100% {
+    background-color: rgba(var(--foreground-color-rgb), 0.2);
+  }
+}

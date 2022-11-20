@@ -18,8 +18,8 @@ export type Character = {
 
 export type CharacterResult = {
   total: number;
-  nextPage?: string;
-  previousPage?: string;
+  totalPages: number;
+  currentPage: number;
   characters: Character[];
 }
 

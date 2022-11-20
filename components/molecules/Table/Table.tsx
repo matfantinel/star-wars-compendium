@@ -1,5 +1,5 @@
 import React from 'react';
-import CellContent from '../../molecules/CellContent';
+import CellContent from '../CellContent';
 import styles from './Table.module.scss';
 
 export enum ColumnType {
@@ -33,7 +33,7 @@ const Table = <T,>({ columns, data, loading, error }: Props<T>) => {
         </thead>
         <tbody>
           {loading
-            ? Array.from({ length: 4 }).map((_, i) => (
+            ? Array.from({ length: 10 }).map((_, i) => (
                 <tr key={`placeholder-${i}`}>
                   {columns.map((_, j) => (
                     <CellContent loading key={`placeholder-${i}-${j}`} />
@@ -46,7 +46,7 @@ const Table = <T,>({ columns, data, loading, error }: Props<T>) => {
                     column.type === ColumnType.Text ? (
                       <CellContent data={item[column.key] as string} key={column.key as string} />
                     ) : (
-                      <CellContent loading data='TO-DO' key={column.key as string} />
+                      <CellContent loading data="TO-DO" key={column.key as string} />
                     )
                   )}
                 </tr>

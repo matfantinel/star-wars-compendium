@@ -2,6 +2,18 @@ import useSWRImmutable from 'swr/immutable'
 
 import { ApiResult, CharacterResult } from './types';
 
+const getCurrentPage = (nextPageUrl?: string, previousPageUrl?: string): number => {
+  if (nextPageUrl) {
+    return parseInt(nextPageUrl.split('page=')[1]) - 1;
+  }
+
+  if (previousPageUrl) {
+    return parseInt(previousPageUrl.split('page=')[1]) + 1;
+  }
+
+  return 1;
+};
+
 const fetcher = async (url: string): Promise<any> => {
   return await fetch(url, {
     method: 'GET'
@@ -10,8 +22,8 @@ const fetcher = async (url: string): Promise<any> => {
 
     const result: CharacterResult | undefined = apiResult ? {
       total: apiResult.count,
-      nextPage: apiResult.next ?? undefined,
-      previousPage: apiResult.previous ?? undefined,
+      totalPages: Math.ceil(apiResult.count / 10),
+      currentPage: getCurrentPage(apiResult.next, apiResult.previous),
       characters: apiResult.results.map((character) => {
         return {
           uid: character.url,
@@ -39,14 +51,19 @@ const fetcher = async (url: string): Promise<any> => {
   });
 };
 
-export const useCharacters = () => {
+export const useCharacters = (page?: number, search?: string) => {
   const { data, error } = useSWRImmutable<CharacterResult>(
-    `${process.env.NEXT_PUBLIC_API_BASE_URL}/people`,
+    `${process.env.NEXT_PUBLIC_API_BASE_URL}/people?page=${page ?? 1}&search=${search ?? ''}`,
     (url: string) => fetcher(url)
   );
 
   return {
-    data,
+    data: data?.characters,
+    pagination: {
+      total: data?.total ?? 0,
+      totalPages: data?.totalPages ?? 1,
+      currentPage: data?.currentPage ?? 1,
+    },
     isLoading: !error && !data,
     error
   };

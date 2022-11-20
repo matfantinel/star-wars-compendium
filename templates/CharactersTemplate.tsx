@@ -1,13 +1,18 @@
 import React from 'react';
-import { Column, ColumnType } from '../components/organisms/Table/Table';
+import { Column, ColumnType } from '../components/molecules/Table/Table';
 
 import { useCharacters } from '../data/characters/hooks';
 import { Character } from '../data/characters/types';
 
-import Table from '../components/organisms/Table';
+import PaginatedTable from '../components/organisms/PaginatedTable';
 
 const CharactersTemplate: React.FC = () => {
-  const { data, error, isLoading } = useCharacters();
+  const [currentPage, setCurrentPage] = React.useState(1);
+  const { data, pagination, error, isLoading } = useCharacters(currentPage);
+
+  const handlePageChange = (page: number) => {
+    setCurrentPage(page);
+  };
 
   const columns: Column<Character>[] = [
     {
@@ -69,7 +74,14 @@ const CharactersTemplate: React.FC = () => {
 
   return (
     <>
-      <Table columns={columns} data={data?.characters} loading={isLoading} error={error} />
+      <PaginatedTable
+        columns={columns}
+        data={data}
+        pagination={pagination}
+        loading={isLoading}
+        error={error}
+        onPageChange={handlePageChange}
+      />
     </>
   );
 };

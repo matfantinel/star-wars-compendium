@@ -1,4 +1,8 @@
 :root {
+  // Fonts
+  --font-family: "Ubuntu Mono", monospace;
+
+  // Colors
   --background-color: #000000;
   --background-color-rgb: 0, 0, 0;
   --card-background-color: #0f0e00;
@@ -11,6 +15,9 @@
   --secondary-color-rgb: 162, 119, 255;
   --tertiary-color: #61ffca;
   --tertiary-color-rgb: 97, 255, 202;
+
+  // Shadows
+  --text-shadow: 0px 4px 4px rgba(var(--primary-color-rgb),0.75);
 }
 
 

@@ -6,14 +6,15 @@ import styles from './CellContent.module.scss';
 type Props = {
   data?: string;
   loading?: boolean;
+  width?: string;
   isHeader?: boolean;
 };
 
-const CellContent: React.FC<Props> = ({ data, loading, isHeader = false }) => {
+const CellContent: React.FC<Props> = ({ data, loading, width, isHeader = false }) => {
   const content = loading ? <Placeholder /> : <span>{data ?? ''}</span>;
 
   return isHeader 
-    ? <th className={`${styles.cell} ${styles.heading}`}>{content}</th>
+    ? <th className={`${styles.cell} ${styles.heading}`} style={{ width }}>{content}</th>
     : <td className={styles.cell}>{content}</td>;
 };
 

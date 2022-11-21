@@ -28,8 +28,12 @@ const fetcher = async (url: string): Promise<any> => {
         return {
           uid: character.url,
           name: character.name,
-          height: character.height,
-          weight: character.mass,
+          height: character.height && !isNaN(parseInt(character.height)) 
+            ? `${parseInt(character.height) / 100}m` 
+            : character.height,
+          weight: character.mass && !isNaN(parseInt(character.mass)) 
+            ? `${character.mass}kg` 
+            : character.mass,
           hairColor: character.hair_color,
           skinColor: character.skin_color,
           eyeColor: character.eye_color,

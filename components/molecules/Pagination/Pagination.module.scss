@@ -14,3 +14,38 @@
   padding: 0;
   gap: 8px;
 }
+
+.caption {
+  font-size: 1.2rem;
+}
+
+.item {
+  width: 32px;
+  font-size: 1.2rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  button {
+    background-color: transparent;
+    color: var(--foreground-color);
+    border: none;
+    width: 100%;
+    transition: background-color 0.3s ease;
+    cursor: pointer;
+    border-radius: 4px;
+
+    &:hover {
+      background-color: rgba(var(--foreground-color-rgb), 0.3);
+    }
+    &:active {
+      background-color: rgba(var(--foreground-color-rgb), 0.5);
+    }
+  }
+}
+
+.active {
+  color: var(--primary-color);
+  font-weight: bold;
+  text-shadow: var(--text-shadow);
+}

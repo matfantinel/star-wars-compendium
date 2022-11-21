@@ -1,4 +1,12 @@
 .container {
   display: flex;
   flex-direction: column;
+  padding-bottom: 40px;
+}
+
+.title {
+  text-align: center;
+  color: var(--primary-color);
+  margin-top: 20px;
+  text-shadow: var(--text-shadow);
 }

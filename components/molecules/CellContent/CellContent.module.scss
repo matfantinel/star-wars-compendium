@@ -1,9 +1,10 @@
 .cell {
   text-transform: capitalize;
-  padding: 6px;
+  padding: 6px 10px;
 }
 
 .heading {
   font-weight: bold;
   text-align: left;
+  text-shadow: var(--text-shadow);
 }

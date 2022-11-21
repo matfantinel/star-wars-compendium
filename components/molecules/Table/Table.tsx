@@ -11,6 +11,7 @@ export type Column<T> = {
   title: string;
   type: ColumnType;
   key: keyof T;
+  width?: string;
 };
 
 type Props<T> = {
@@ -27,7 +28,7 @@ const Table = <T,>({ columns, data, loading, error }: Props<T>) => {
         <thead>
           <tr>
             {columns.map((column) => (
-              <CellContent isHeader data={column.title} key={column.key as string} />
+              <CellContent isHeader data={column.title} key={column.key as string} width={column.width} />
             ))}
           </tr>
         </thead>
@@ -35,8 +36,8 @@ const Table = <T,>({ columns, data, loading, error }: Props<T>) => {
           {loading
             ? Array.from({ length: 10 }).map((_, i) => (
                 <tr key={`placeholder-${i}`}>
-                  {columns.map((_, j) => (
-                    <CellContent loading key={`placeholder-${i}-${j}`} />
+                  {columns.map((column, j) => (
+                    <CellContent loading key={`placeholder-${i}-${j}`} width={column.width} />
                   ))}
                 </tr>
               ))
@@ -44,9 +45,9 @@ const Table = <T,>({ columns, data, loading, error }: Props<T>) => {
                 <tr key={(item as any)?.uid ?? index}>
                   {columns.map((column) =>
                     column.type === ColumnType.Text ? (
-                      <CellContent data={item[column.key] as string} key={column.key as string} />
+                      <CellContent data={item[column.key] as string} key={column.key as string} width={column.width} />
                     ) : (
-                      <CellContent loading data="TO-DO" key={column.key as string} />
+                      <CellContent loading data="TO-DO" key={column.key as string} width={column.width} />
                     )
                   )}
                 </tr>

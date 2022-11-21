@@ -19,62 +19,74 @@ const CharactersTemplate: React.FC = () => {
       title: 'Name',
       key: 'name',
       type: ColumnType.Text,
+      width: '150px'
     },
     {
       title: 'Height',
       key: 'height',
       type: ColumnType.Text,
+      width: '70px'
     },
     {
       title: 'Weight',
       key: 'weight',
       type: ColumnType.Text,
+      width: '70px'
     },
     {
       title: 'Hair Color',
       key: 'hairColor',
       type: ColumnType.Text,
+      width: '90px'
     },
     {
       title: 'Skin Color',
       key: 'skinColor',
       type: ColumnType.Text,
+      width: '100px'
     },
     {
       title: 'Eye Color',
       key: 'eyeColor',
       type: ColumnType.Text,
+      width: '100px'
     },
     {
       title: 'Birth Year',
       key: 'birthYear',
       type: ColumnType.Text,
+      width: '95px'
     },
     {
       title: 'Gender',
       key: 'gender',
       type: ColumnType.Text,
+      width: '80px'
     },
     {
       title: 'Planet of Origin',
       key: 'homeWorldUrl',
       type: ColumnType.Relation,
+      width: '130px'
     },
     {
       title: 'Appeared In',
       key: 'filmsUrls',
       type: ColumnType.Relation,
+      width: '120px'
     },
     {
       title: 'Starships',
       key: 'starshipsUrls',
       type: ColumnType.Relation,
+      width: '100px'
     },
   ];
 
   return (
     <>
       <PaginatedTable
+        title="Star Wars Compendium - Characters"
         columns={columns}
         data={data}
         pagination={pagination}

@@ -15,7 +15,7 @@ const CellContent: React.FC<Props> = ({ data, loading, width, isHeader = false }
 
   return isHeader 
     ? <th className={`${styles.cell} ${styles.heading}`} style={{ width }}>{content}</th>
-    : <td className={styles.cell}>{content}</td>;
+    : <td className={styles.cell} style={{ width }}>{content}</td>;
 };
 
 export default CellContent;

@@ -1,6 +1,9 @@
 # Star Wars Compendium
 
-A single place for all the Star Wars characters.
+A sample app that displays all the Star Wars characters.
+
+<img width="1580" alt="Arc 2022-11-21 at 16 18 59@2x" src="https://user-images.githubusercontent.com/24247035/203091393-d6ae52be-fa64-4894-92e8-e0cad9078a14.png">
+
 
 ## How to run
 

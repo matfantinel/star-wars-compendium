@@ -1,18 +1,8 @@
 import React from 'react';
+
+import { Column, ColumnType } from '../../../data/characters/columns';
 import CellContent from '../CellContent';
 import styles from './Table.module.scss';
-
-export enum ColumnType {
-  Text = 'text',
-  Relation = 'relation',
-}
-
-export type Column<T> = {
-  title: string;
-  type: ColumnType;
-  key: keyof T;
-  width?: string;
-};
 
 type Props<T> = {
   columns: Column<T>[];
@@ -43,13 +33,24 @@ const Table = <T,>({ columns, data, loading, error }: Props<T>) => {
               ))
             : data?.map((item, index) => (
                 <tr key={(item as any)?.uid ?? index}>
-                  {columns.map((column) =>
-                    column.type === ColumnType.Text ? (
-                      <CellContent data={item[column.key] as string} key={column.key as string} width={column.width} />
-                    ) : (
-                      <CellContent loading data="TO-DO" key={column.key as string} width={column.width} />
-                    )
-                  )}
+                  {columns.map((column) => {
+                    const value = item[column.key] as string;
+                    if (column.type === ColumnType.Relation) {
+                      const relationValue = (item as any)[`${column.key as string}Url`];
+                      return (
+                        <CellContent
+                          loading={
+                            relationValue && (!Array.isArray(relationValue) || relationValue.length > 0) && !value
+                          }
+                          data={value}
+                          key={column.key as string}
+                          width={column.width}
+                        />
+                      );
+                    } else {
+                      return <CellContent data={value} key={column.key as string} width={column.width} />;
+                    }
+                  })}
                 </tr>
               ))}
         </tbody>

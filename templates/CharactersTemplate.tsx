@@ -1,92 +1,92 @@
 import React from 'react';
-import { Column, ColumnType } from '../components/molecules/Table/Table';
-
-import { useCharacters } from '../data/characters/hooks';
-import { Character } from '../data/characters/types';
 
 import PaginatedTable from '../components/organisms/PaginatedTable';
+import { columns } from '../data/characters/columns';
+import { useCharacters } from '../data/characters/hooks';
+import { Character, Planet } from '../data/characters/types';
 
 const CharactersTemplate: React.FC = () => {
+  const [data, setData] = React.useState<Character[] | undefined>();
+
   const [currentPage, setCurrentPage] = React.useState(1);
-  const { data, pagination, error, isLoading } = useCharacters(currentPage);
+  const { data: characters, pagination, error, isLoading } = useCharacters(currentPage);
 
   const handlePageChange = (page: number) => {
     setCurrentPage(page);
   };
 
-  const columns: Column<Character>[] = [
-    {
-      title: 'Name',
-      key: 'name',
-      type: ColumnType.Text,
-      width: '150px'
-    },
-    {
-      title: 'Height',
-      key: 'height',
-      type: ColumnType.Text,
-      width: '70px'
-    },
-    {
-      title: 'Weight',
-      key: 'weight',
-      type: ColumnType.Text,
-      width: '70px'
-    },
-    {
-      title: 'Hair Color',
-      key: 'hairColor',
-      type: ColumnType.Text,
-      width: '90px'
-    },
-    {
-      title: 'Skin Color',
-      key: 'skinColor',
-      type: ColumnType.Text,
-      width: '100px'
-    },
-    {
-      title: 'Eye Color',
-      key: 'eyeColor',
-      type: ColumnType.Text,
-      width: '100px'
-    },
-    {
-      title: 'Birth Year',
-      key: 'birthYear',
-      type: ColumnType.Text,
-      width: '95px'
-    },
-    {
-      title: 'Gender',
-      key: 'gender',
-      type: ColumnType.Text,
-      width: '80px'
-    },
-    {
-      title: 'Planet of Origin',
-      key: 'homeWorldUrl',
-      type: ColumnType.Relation,
-      width: '130px'
-    },
-    {
-      title: 'Appeared In',
-      key: 'filmsUrls',
-      type: ColumnType.Relation,
-      width: '120px'
-    },
-    {
-      title: 'Starships',
-      key: 'starshipsUrls',
-      type: ColumnType.Relation,
-      width: '100px'
-    },
-  ];
+  React.useEffect(() => {
+    setData(characters);
+
+    // Get unique URLs for each relational data
+    const planetUrls = characters
+      ?.map((c) => c.homeWorldUrl)
+      .filter((url, index, arr) => arr.indexOf(url) === index) as string[];
+
+    // Fetch the data and add it to the object
+    planetUrls?.forEach((url) => {
+      fetch(url)
+        .then((r) => r.json())
+        .then((planet: Planet) => {
+          setData((prev) => {
+            return prev?.map((c) => {
+              if (c.homeWorldUrl === url) {
+                return { ...c, homeWorld: planet.name };
+              }
+              return c;
+            });
+          });
+        });
+    });
+
+    const filmUrls = characters
+      ?.map((c) => c.filmsUrl)
+      .flat()
+      .filter((url, index, arr) => arr.indexOf(url) === index) as string[];
+
+    filmUrls?.forEach((url) => {
+      fetch(url)
+        .then((r) => r.json())
+        .then((film) => {
+          setData((prev) => {
+            return prev?.map((c) => {
+              if (c.filmsUrl?.includes(url)) {
+                return { ...c, films: c.films ? c.films.split(', ').concat(film.title).join(', ') : film.title };
+              }
+              return c;
+            });
+          });
+        });
+    });
+
+    const starshipUrls = characters
+      ?.map((c) => c.starshipsUrl)
+      .flat()
+      .filter((url, index, arr) => arr.indexOf(url) === index) as string[];
+
+    starshipUrls?.forEach((url) => {
+      fetch(url)
+        .then((r) => r.json())
+        .then((starship) => {
+          setData((prev) => {
+            return prev?.map((c) => {
+              if (c.starshipsUrl?.includes(url)) {
+                return {
+                  ...c,
+                  starships: c.starships ? c.starships.split(', ').concat(starship.name).join(', ') : starship.name,
+                };
+              }
+              return c;
+            });
+          });
+        });
+    });
+  }, [characters]);
 
   return (
     <>
       <PaginatedTable
-        title="Star Wars Compendium - Characters"
+        title='Star Wars Compendium - Characters'
         columns={columns}
         data={data}
         pagination={pagination}

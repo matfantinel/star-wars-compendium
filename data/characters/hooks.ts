@@ -1,6 +1,6 @@
 import useSWRImmutable from 'swr/immutable'
 
-import { ApiResult, CharacterResult } from './types';
+import { ApiResult, Character, CharacterResult, Film, Planet, Starship } from './types';
 
 const getCurrentPage = (nextPageUrl?: string, previousPageUrl?: string): number => {
   if (nextPageUrl) {
@@ -24,27 +24,24 @@ const fetcher = async (url: string): Promise<any> => {
       total: apiResult.count,
       totalPages: Math.ceil(apiResult.count / 10),
       currentPage: getCurrentPage(apiResult.next, apiResult.previous),
-      characters: apiResult.results.map((character) => {
+      characters: apiResult.results.map((character): Character => {
         return {
           uid: character.url,
           name: character.name,
-          height: character.height && !isNaN(parseInt(character.height)) 
-            ? `${parseInt(character.height) / 100}m` 
+          height: character.height && !isNaN(parseInt(character.height))
+            ? `${parseInt(character.height) / 100}m`
             : character.height,
-          weight: character.mass && !isNaN(parseInt(character.mass)) 
-            ? `${character.mass}kg` 
+          weight: character.mass && !isNaN(parseInt(character.mass))
+            ? `${character.mass}kg`
             : character.mass,
           hairColor: character.hair_color,
           skinColor: character.skin_color,
           eyeColor: character.eye_color,
           birthYear: character.birth_year,
           gender: character.gender,
-          homeWorld: undefined, // TODO
           homeWorldUrl: character.homeworld,
-          films: undefined, // TODO
-          filmsUrls: character.films,
-          starships: undefined, // TODO
-          starshipsUrls: character.starships
+          filmsUrl: character.films,
+          starshipsUrl: character.starships
         }
       })
     } : undefined;

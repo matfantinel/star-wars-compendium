@@ -8,12 +8,12 @@ export type Character = {
   eyeColor: string;
   birthYear: string;
   gender: string;
-  // homeWorld?: Planet;
-  homeWorldUrl: string;
-  // films?: Film[];
-  filmsUrls: string[];
-  // starships?: Starship[];
-  starshipsUrls: string[];
+  homeWorld?: string;
+  homeWorldUrl?: string;
+  films?: string;
+  filmsUrl?: string[];
+  starships?: string;
+  starshipsUrl?: string[];
 }
 
 export type CharacterResult = {
@@ -50,14 +50,17 @@ export type ApiResult = {
 //
 
 export type Planet = {
+  url: string;
   name: string;
 }
 
 export type Film = {
+  url: string;
   title: string;
 }
 
 export type Starship = {
+  url: string;
   name: string;
   model: string;
   manufacturer: string;

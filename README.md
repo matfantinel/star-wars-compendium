@@ -17,7 +17,7 @@ For fetching data, I've used [SWR](https://swr.vercel.app/) because, being Hooks
 
 ## Project Structure
 
-Components are organized following the [Atomic Design](https://www.blueacornici.com/blog/5-major-elements-of-atomic-design/) principles, and are split into Atoms, Molecules, Organisms and Templates. Each component only holds code that is specific to it, and data fetching/handling is reserved for the Template level.
+Components are organized following the [Atomic Design]([https://www.blueacornici.com/blog/5-major-elements-of-atomic-design/](https://atomicdesign.bradfrost.com/chapter-2/)) principles, and are split into Atoms, Molecules, Organisms and Templates. Each component only holds code that is specific to it, and data fetching/handling is reserved for the Template level.
 
 Styles are organized in a similar way, with the exception of the `globals.scss` file, which contains/imports global styles and variables.
 
